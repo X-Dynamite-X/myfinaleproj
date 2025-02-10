@@ -53,9 +53,10 @@ const submit = () => {
                             : ''
                     "
                     autocomplete="username"
+                    :errorMessage2="form.errors.email"
+
                 />
-                <InputError class="mt-2" :message="form.errors.email" />
-            </div>
+             </div>
 
             <div class="mt-4">
                 <TextInput
@@ -67,6 +68,7 @@ const submit = () => {
                     :required="true"
                     v-model="form.password"
                     autocomplete="current-password"
+
                 />
             </div>
 

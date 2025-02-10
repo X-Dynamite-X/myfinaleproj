@@ -1,9 +1,9 @@
 <script setup>
-import InputError from '@/Components/InputError.vue';
-import InputLabel from '@/Components/InputLabel.vue';
-import PrimaryButton from '@/Components/PrimaryButton.vue';
-import TextInput from '@/Components/TextInput.vue';
-import { Link, useForm, usePage } from '@inertiajs/vue3';
+import InputError from "@/Components/InputError.vue";
+import InputLabel from "@/Components/InputLabel.vue";
+import PrimaryButton from "@/Components/PrimaryButton.vue";
+import TextInput from "@/MyComponents/FieldRequst/InputForm.vue";
+import { Link, useForm, usePage } from "@inertiajs/vue3";
 
 defineProps({
     mustVerifyEmail: {
@@ -39,34 +39,47 @@ const form = useForm({
             class="mt-6 space-y-6"
         >
             <div>
-                <InputLabel for="name" value="Name" />
+
 
                 <TextInput
                     id="name"
-                    type="text"
-                    class="mt-1 block w-full"
+                    label="Name"
+                    name="name"
                     v-model="form.name"
-                    required
-                    autofocus
+                    placeholder="Name"
+                    :required="true"
+                    :inputClass="
+                        form.errors.name
+                            ? 'bg-red-50 border border-red-500 text-red-900 placeholder-red-700  focus:ring-red-500 dark:bg-gray-700 focus:border-red-500  dark:text-red-500 dark:placeholder-red-500 dark:border-red-500'
+                            : ''
+                    "
+                    :errorMessage2="form.errors.name"
                     autocomplete="name"
-                />
 
-                <InputError class="mt-2" :message="form.errors.name" />
+                />
+                <!-- <InputError class="mt-2" :message="form.errors.name" /> -->
             </div>
 
             <div>
-                <InputLabel for="email" value="Email" />
 
-                <TextInput
+               <TextInput
                     id="email"
                     type="email"
-                    class="mt-1 block w-full"
+                    label="Email Address"
+                    name="email"
                     v-model="form.email"
-                    required
-                    autocomplete="username"
-                />
+                    placeholder="Email Adresses"
+                    :required="true"
+                    :inputClass="
+                        form.errors.email
+                            ? 'bg-red-50 border border-red-500 text-red-900 placeholder-red-700  focus:ring-red-500 dark:bg-gray-700 focus:border-red-500  dark:text-red-500 dark:placeholder-red-500 dark:border-red-500'
+                            : ''
+                    "
+                    autocomplete="email"
+                    :errorMessage2="form.errors.email"
 
-                <InputError class="mt-2" :message="form.errors.email" />
+                />
+                <!-- <InputError class="mt-2" :message="form.errors.email" /> -->
             </div>
 
             <div v-if="mustVerifyEmail && user.email_verified_at === null">

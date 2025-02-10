@@ -1,32 +1,32 @@
 <script setup>
-import InputError from '@/Components/InputError.vue';
-import InputLabel from '@/Components/InputLabel.vue';
-import PrimaryButton from '@/Components/PrimaryButton.vue';
-import TextInput from '@/Components/TextInput.vue';
-import { useForm } from '@inertiajs/vue3';
-import { ref } from 'vue';
+import InputError from "@/Components/InputError.vue";
+import InputLabel from "@/Components/InputLabel.vue";
+import PrimaryButton from "@/Components/PrimaryButton.vue";
+import TextInput from "@/MyComponents/FieldRequst/InputForm.vue";
+import { useForm } from "@inertiajs/vue3";
+import { ref } from "vue";
 
 const passwordInput = ref(null);
 const currentPasswordInput = ref(null);
 
 const form = useForm({
-    current_password: '',
-    password: '',
-    password_confirmation: '',
+    current_password: "",
+    password: "",
+    password_confirmation: "",
 });
 
 const updatePassword = () => {
-    form.put(route('password.update'), {
+    form.put(route("password.update"), {
         preserveScroll: true,
-        onSuccess: () => form.reset(),
+        onSuccess: () => {
+            form.reset();
+        },
         onError: () => {
             if (form.errors.password) {
-                form.reset('password', 'password_confirmation');
-                passwordInput.value.focus();
+                form.reset("password", "password_confirmation");
             }
             if (form.errors.current_password) {
-                form.reset('current_password');
-                currentPasswordInput.value.focus();
+                form.reset("current_password");
             }
         },
     });
@@ -48,55 +48,64 @@ const updatePassword = () => {
 
         <form @submit.prevent="updatePassword" class="mt-6 space-y-6">
             <div>
-                <InputLabel for="current_password" value="Current Password" />
-
                 <TextInput
                     id="current_password"
                     ref="currentPasswordInput"
                     v-model="form.current_password"
                     type="password"
-                    class="mt-1 block w-full"
+                    label="Current Password"
+                    placeholder="Current Password"
+                    name="current_password"
+                    :required="true"
+                    :errorMessage2="form.errors.current_password"
+                    :inputClass="
+                        form.errors.current_password
+                            ? 'bg-red-50 border border-red-500 text-red-900 placeholder-red-700  focus:ring-red-500 dark:bg-gray-700 focus:border-red-500  dark:text-red-500 dark:placeholder-red-500 dark:border-red-500'
+                            : ''
+                    "
+                    autofocus
                     autocomplete="current-password"
                 />
-
-                <InputError
-                    :message="form.errors.current_password"
-                    class="mt-2"
-                />
             </div>
 
             <div>
-                <InputLabel for="password" value="New Password" />
-
                 <TextInput
                     id="password"
-                    ref="passwordInput"
-                    v-model="form.password"
                     type="password"
-                    class="mt-1 block w-full"
+                    ref="passwordinput"
+                    label="New Password"
+                    placeholder="New Password"
+                    name="password"
+                    :required="true"
+                    :inputClass="
+                        form.errors.password
+                            ? 'bg-red-50 border border-red-500 text-red-900 placeholder-red-700  focus:ring-red-500 dark:bg-gray-700 focus:border-red-500  dark:text-red-500 dark:placeholder-red-500 dark:border-red-500'
+                            : ''
+                    "
+                    autofocus
+                    :errorMessage2="form.errors.password"
+                    v-model="form.password"
                     autocomplete="new-password"
                 />
-
-                <InputError :message="form.errors.password" class="mt-2" />
             </div>
 
             <div>
-                <InputLabel
-                    for="password_confirmation"
-                    value="Confirm Password"
-                />
-
                 <TextInput
                     id="password_confirmation"
-                    v-model="form.password_confirmation"
                     type="password"
-                    class="mt-1 block w-full"
+                    label="Confirm Password"
+                    placeholder="Confirm Password"
+                    name="password_confirmation"
+                    :required="true"
+                    :inputClass="
+                        form.errors.password_confirmation
+                            ? 'bg-red-50 border border-red-500 text-red-900 placeholder-red-700  focus:ring-red-500 dark:bg-gray-700 focus:border-red-500  dark:text-red-500 dark:placeholder-red-500 dark:border-red-500'
+                            : ''
+                    "
+                    v-model="form.password_confirmation"
+                    :errorMessage2="form.errors.password_confirmation"
+                    autofocus
                     autocomplete="new-password"
-                />
-
-                <InputError
-                    :message="form.errors.password_confirmation"
-                    class="mt-2"
                 />
             </div>
 
