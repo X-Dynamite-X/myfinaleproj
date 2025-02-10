@@ -40,6 +40,10 @@ defineProps({
         type: Boolean,
         default: false,
     },
+    inputClass: {
+        type: String,
+        default: "",
+    },
 });
 
 const emit = defineEmits(["update:modelValue"]);
@@ -47,7 +51,7 @@ const emit = defineEmits(["update:modelValue"]);
 
 <template>
     <div>
-         <label
+        <label
             :for="id"
             class="block text-sm font-medium text-gray-700 dark:text-gray-200"
         >
@@ -67,11 +71,12 @@ const emit = defineEmits(["update:modelValue"]);
                 :value="modelValue"
                 @input="$emit('update:modelValue', $event.target.value)"
                 class="border border-gray-300 bg-white px-3 py-2 rounded-lg text-sm text-gray-900 placeholder-gray-400 focus:border-indigo-500 focus:ring-indigo-500 block w-full p-2.5 sm:text-base dark:bg-gray-800 dark:border-gray-600 dark:text-gray-100 dark:placeholder-gray-500 dark:focus:border-indigo-400 dark:focus:ring-indigo-400"
-                :class="
+                :class="[
+                    inputClass,
                     errorMessage
                         ? 'bg-red-50 border border-red-500 text-red-900 placeholder-red-700  focus:ring-red-500 dark:bg-gray-700 focus:border-red-500  dark:text-red-500 dark:placeholder-red-500 dark:border-red-500'
-                        : ''
-                "
+                        : '',
+                ]"
             />
         </div>
 
